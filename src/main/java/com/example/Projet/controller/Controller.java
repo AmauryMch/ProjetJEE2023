@@ -37,6 +37,8 @@ public class Controller {
     @Autowired
     private NotationService notationService;
 
+
+
     @GetMapping("/")
     public String home(Model model, HttpSession s) {
         if (!s.equals(null)) {
@@ -65,6 +67,19 @@ public class Controller {
         if(role!=null) {
             if (role.equals("ADMIN")) {
                 return "formActivite";
+            }
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/utilisateurs")
+    public String afficherUtilisateurs(Model model,HttpSession s) {
+        String role = (String) s.getAttribute("role");
+        if(role!=null) {
+            if (role.equals("ADMIN")) {
+                List<Utilisateur> utilisateur = utilisateurService.getAllUtilisateurs();
+                model.addAttribute("utilisateur", utilisateur);
+                return "utilisateurs";
             }
         }
         return "redirect:/";
@@ -193,13 +208,15 @@ public class Controller {
         for (int temp = 0; temp < lp.size(); temp++) {
             if (lp.get(temp).getNom().equals(choixProg)) {
                 Programme p = lp.get(temp);
+                if(!p.getActivites().contains(a)){
+                    p.getActivites().add(a);
 
-                p.getActivites().add(a);
+                    a.getProgrammes().add(p);
 
-                a.getProgrammes().add(p);
+                    programmeService.enregistreProgramme(p);
+                    activiteService.enregistrerActivite(a);
 
-                programmeService.enregistreProgramme(p);
-                activiteService.enregistrerActivite(a);
+                }
             }
         }
         return "redirect:/profil";
@@ -243,12 +260,9 @@ public class Controller {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
-        }
-        return "redirect:/connexion?logout";
+    public String logout(HttpSession s) {
+        s.invalidate();
+        return "redirect:/connexion";
     }
 
 }

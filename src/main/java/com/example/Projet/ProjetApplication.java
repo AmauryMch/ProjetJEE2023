@@ -46,7 +46,7 @@ public class ProjetApplication implements CommandLineRunner {
 		activiteService.enregistrerActivite(new Activite(null, "Natation", "Nager pour se dépenser", null, new ArrayList<Notation>()));
 		activiteService.enregistrerActivite(new Activite(null, "Badminton", "Jouer en raquette avec un volant", null, new ArrayList<Notation>()));
 		activiteService.enregistrerActivite(new Activite(null, "Tennis", "Frapper une balle avec une raquette", null, new ArrayList<Notation>()));
-		activiteService.enregistrerActivite(new Activite(null, "Ark", "Dino dino", null, null));
+		activiteService.enregistrerActivite(new Activite(null, "Ark", "Tu as mis la prime meat dans le dino?", null, null));
 		activiteService.enregistrerActivite(new Activite(null, "Gymnastique", "Faire des mouvements pour se muscler", null, new ArrayList<Notation>()));
 		activiteService.enregistrerActivite(new Activite(null, "Escalade", "Monter une paroi à l'aide de cordes", null, new ArrayList<Notation>()));
 		activiteService.enregistrerActivite(new Activite(null, "Randonnée", "Marcher en nature pour découvrir de nouveaux paysages", null, new ArrayList<Notation>()));
@@ -64,8 +64,8 @@ public class ProjetApplication implements CommandLineRunner {
 
 		utilisateurService.enregistreUtilisateur(u);
 
-		Programme p=new Programme(null, "Sport",u, new ArrayList<Activite>(),0);
-		Programme p2=new Programme(null, "Geek puant",u, new ArrayList<Activite>(),0);
+		Programme p=new Programme(null, "Programme 1",u, new ArrayList<Activite>(),0);
+		Programme p2=new Programme(null, "Programme 2",u, new ArrayList<Activite>(),0);
 		programmeService.enregistreProgramme(p);
 		programmeService.enregistreProgramme(p2);
 		List<Programme> pl = u.getProgrammes();
